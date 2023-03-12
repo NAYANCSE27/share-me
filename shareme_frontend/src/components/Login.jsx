@@ -5,7 +5,11 @@ import { FcGoogle } from "react-icons/fc";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
 
+import { client } from "../client";
+
 const Login = () => {
+  const navigate = useNavigate();
+
   const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
     
@@ -17,6 +21,11 @@ const Login = () => {
       userName: name,
       image: imageUrl,
     }
+
+    client.createIfNotExists(doc)
+    .then(() => {
+      navigate('/', {replace : true})
+    })
   };
   return (
     <div className="flex justify-start items-center flex-col h-screen">
